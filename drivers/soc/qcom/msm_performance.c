@@ -521,7 +521,7 @@ static int set_cpu_max_freq(const char *buf, const struct kernel_param *kp)
 	/* CPU:value pair */
 	if (!(ntokens % 2))
 		return -EINVAL;
-if (touchboost == 0)
+if (touchboost == 1)
  		cp = reset;
  	else
  		cp = buf;
