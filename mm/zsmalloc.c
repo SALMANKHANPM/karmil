@@ -2287,7 +2287,7 @@ static unsigned long zs_can_compact(struct size_class *class)
 static unsigned long __zs_compact(struct zs_pool *pool,
 				   struct size_class *class)
 {
-	struct zs_compact_control cc;
+	struct zs_compact_control  cc;
 	struct zspage *src_spage;
 	struct zspage *dst_spage = NULL;
 	unsigned long pages_freed = 0;
@@ -2317,9 +2317,10 @@ static unsigned long __zs_compact(struct zs_pool *pool,
 		if (dst_spage == NULL)
 			break;
 
-			putback_zspage(pool, class, dst_page);
-		if (putback_zspage(pool, class, src_page) == ZS_EMPTY)
+			putback_zspage(class, dst_spage);
+		if (putback_zspage(class, src_spage) == ZS_EMPTY) {
 			pages_freed += class->pages_per_zspage;
+                }
 		spin_unlock(&class->lock);
 		cond_resched();
 		spin_lock(&class->lock);
