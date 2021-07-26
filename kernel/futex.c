@@ -1,5 +1,4 @@
-/*
- *  Fast Userspace Mutexes (which I call "Futexes!").
+ /*  Fast Userspace Mutexes (which I call "Futexes!").
  *  (C) Rusty Russell, IBM 2002
  *
  *  Generalized futexes, futex requeueing, misc fixes by Ingo Molnar

@@ -2288,21 +2288,21 @@ static unsigned long __zs_compact(struct zs_pool *pool,
 				   struct size_class *class)
 {
 	struct zs_compact_control cc;
-	struct zspage *src_zspage;
-	struct zspage *dst_zspage = NULL;
+	struct zspage *src_spage;
+	struct zspage *dst_spage = NULL;
 	unsigned long pages_freed = 0;
 
 	spin_lock(&class->lock);
-	while ((src_zspage = isolate_zspage(class, true))) {
+	while ((src_spage = isolate_zspage(class, true))) {
 
 		if (!zs_can_compact(class))
 			break;
 
 		cc.index = 0;
-		cc.s_page = get_first_page(src_zspage);
+		cc.s_page = get_first_page(src_spage);
 
-		while ((dst_zspage = isolate_zspage(class, false))) {
-			cc.d_page = get_first_page(dst_zspage);
+		while ((dst_spage = isolate_zspage(class, false))) {
+			cc.d_page = get_first_page(dst_spage);
 			/*
 			 * If there is no more space in dst_page, resched
 			 * and see if anyone had allocated another zspage.
@@ -2310,25 +2310,23 @@ static unsigned long __zs_compact(struct zs_pool *pool,
 			if (!migrate_zspage(pool, class, &cc))
 				break;
 
-			putback_zspage(class, dst_zspage);
+			putback_zspage(class, dst_spage);
 		}
 
 		/* Stop if we couldn't find slot */
-		if (dst_zspage == NULL)
+		if (dst_spage == NULL)
 			break;
 
-		putback_zspage(class, dst_zspage);
-		if (putback_zspage(class, src_zspage) == ZS_EMPTY) {
-			free_zspage(pool, class, src_zspage);
+			putback_zspage(pool, class, dst_page);
+		if (putback_zspage(pool, class, src_page) == ZS_EMPTY)
 			pages_freed += class->pages_per_zspage;
-		}
 		spin_unlock(&class->lock);
 		cond_resched();
 		spin_lock(&class->lock);
 	}
 
-	if (src_zspage)
-		putback_zspage(class, src_zspage);
+	if (src_spage)
+		putback_zspage(class, src_spage);
 
 	spin_unlock(&class->lock);
 
