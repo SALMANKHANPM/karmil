@@ -1,16 +1,16 @@
 #!/bin/bash
 
-export KERNELNAME=Deagle
+export KERNELNAME=DeagleEAS
 
-export LOCALVERSION=V17
+export LOCALVERSION=V20-WALKERZ-EDITION
 
-export KBUILD_BUILD_USER=builder
+export KBUILD_BUILD_USER=SALMANKHANPM
 
-export KBUILD_BUILD_HOST=deagle
+export KBUILD_BUILD_HOST=salmantechnical123
 
 export TOOLCHAIN=clang
 
-export DEVICES=whyred,tulip,wayne
+export DEVICES=whyred
 
 source helper
 

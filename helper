@@ -58,7 +58,6 @@ mkzip(){
 	else
 		send_msg "Build error !"
 		print "Build error !" red
-		exit 1
 	fi
 }
 
@@ -79,10 +78,10 @@ gen_toolchain(){
 	print "Cloning toolchain files..." green
 	if [ $TOOLCHAIN == "clang" ]
 	then
-		git clone --depth=1 https://github.com/kdrag0n/proton-clang clang
+		git clone --depth=1 https://gitlab.com/ElectroPerf/atom-x-clang.git clang
 	else
-		git clone --depth=1 https://github.com/chips-project/aarch64-elf gcc64
-		git clone --depth=1 https://github.com/chips-project/arm-eabi gcc32
+		git clone --depth=1 https://github.com/mvaisakh/gcc-arm64.git gcc64
+		git clone --depth=1 https://github.com/mvaisakh/gcc-arm.git gcc32
 	fi
 	git clone --depth=1 https://github.com/DDEAGLE/AnyKernel3 -b release anykernel
 }
