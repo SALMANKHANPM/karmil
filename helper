@@ -83,7 +83,7 @@ gen_toolchain(){
 		git clone --depth=1 https://github.com/mvaisakh/gcc-arm64.git gcc64
 		git clone --depth=1 https://github.com/mvaisakh/gcc-arm.git gcc32
 	fi
-	git clone --depth=1 https://github.com/DDEAGLE/AnyKernel3 -b release anykernel
+	git clone --depth=1 https://github.com/SALMANKHANPM/AnyKernel3 -b release anykernel
 }
 
 build(){
